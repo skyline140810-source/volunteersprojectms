@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Волонтерская доска</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
+    <style>
+        /* РЕСЕТ СТИЛЕЙ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        html {
+            font-size: 16px;
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* КОНТЕЙНЕР */
+        .app-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+            min-height: 100vh;
+        }
+
+        /* ШАПКА */
+        .main-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: none;
+        }
+
+        .main-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .main-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* КНОПКИ */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            margin: 8px 0;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 1.5rem 0;
+        }
+
+        /* КАРТОЧКИ */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: none;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .card-info {
+            color: #555;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .card-info strong {
+            color: #2c3e50;
+        }
+
+        /* ФОРМЫ */
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        /* СТАТУСЫ */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .status-active {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+        }
+
+        .status-progress {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+        }
+
+        .status-completed {
+            background: linear-gradient(135deg, #e2e3e5 0%, #d6d8db 100%);
+            color: #383d41;
+        }
+
+        .status-cancelled {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+        }
+
+        /* СЕТКА */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        /* СТАТИСТИКА */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2c3e50;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* УТИЛИТЫ */
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .hidden { display: none; }
+        .visible { display: block; }
+
+        /* АЛЕРТЫ */
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 5px solid;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+
+        /* ФУТЕР */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+            border-top: 1px solid #eee;
+        }
+
+        /* АДАПТИВНОСТЬ */
+        @media (min-width: 768px) {
+            html { font-size: 17px; }
+            
+            .btn-group {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .btn {
+                width: auto;
+                min-width: 200px;
+            }
+            
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .app-container {
+                padding: 20px;
+            }
+            
+            .main-header {
+                padding: 2rem;
+            }
+            
+            .main-header h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        /* АНИМАЦИИ */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* ДЛЯ MOBILE ТОЧНО НЕ БУДЕТ ПРОКРУТКИ */
+        @media (max-width: 767px) {
+            html, body {
+                width: 100vw;
+                max-width: 100vw;
+                overflow-x: hidden;
+                position: relative;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            .app-container {
+                padding: 10px;
+                width: 100vw;
+            }
+            
+            .form-card {
+                padding: 1rem;
+                margin: 1rem;
+                width: calc(100vw - 20px);
+            }
+            
+            .card {
+                padding: 1rem;
+                margin: 0.5rem 0;
+            }
+            
+            * {
+                max-width: 100vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Главная страница -->
+        <div id="page-home" class="page visible">
+            <header class="main-header">
+                <h1>🤝 Волонтерская доска</h1>
+                <p>Помогаем находить помощь и помогать</p>
+            </header>
+            
+            <div class="form-card">
+                <h2 class="card-title text-center">Добро пожаловать!</h2>
+                <p class="text-center mb-2">Присоединяйтесь к сообществу волонтеров</p>
+                
+                <div class="btn-group">
+                    <button onclick="showPage('login')" class="btn">Войти в систему</button>
+                    <button onclick="showPage('register')" class="btn btn-success">Регистрация</button>
+                    <button onclick="showPage('view')" class="btn btn-secondary">Смотреть заявки</button>
+                </div>
+                
+                <div id="home-stats" class="stats-grid mt-2"></div>
+            </div>
+        </div>
+
+        <!-- Дашборд -->
+        <div id="page-dashboard" class="page hidden">
+            <header class="main-header">
+                <h1>🤝 Волонтерская доска</h1>
+                <div id="dashboard-user-info"></div>
+            </header>
+            
+            <div id="dashboard-stats" class="stats-grid"></div>
+            
+            <div class="btn-group">
+                <button onclick="showPage('create')" class="btn btn-success">➕ Создать заявку</button>
+                <button onclick="showPage('view')" class="btn">👀 Все заявки</button>
+                <button onclick="showPage('my-requests')" class="btn">📋 Мои заявки</button>
+                <button onclick="showPage('archive')" class="btn">📁 Архив</button>
+                <button id="admin-btn" onclick="showPage('admin')" class="btn btn-danger hidden">⚙️ Админ-панель</button>
+                <button onclick="logout()" class="btn btn-secondary">🚪 Выйти</button>
+            </div>
+            
+            <div id="dashboard-content" class="grid mt-2"></div>
+        </div>
+
+        <!-- Вход -->
+        <div id="page-login" class="page hidden">
+            <div class="form-card">
+                <h2 class="card-title text-center">Вход в систему</h2>
+                <div id="login-message" class="alert hidden"></div>
+                
+                <div class="form-group">
+                    <label class="form-label">Имя пользователя</label>
+                    <input type="text" id="login-username" class="form-control" placeholder="Введите логин">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="Введите пароль">
+                </div>
+                
+                <button onclick="login()" class="btn">Войти</button>
+                <button onclick="showPage('home')" class="btn btn-secondary mt-1">На главную</button>
+                
+                <p class="text-center mt-2">
+                    Нет аккаунта? <a href="#" onclick="showPage('register')" style="color: #3498db; font-weight: 600;">Зарегистрируйтесь</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Регистрация -->
+        <div id="page-register" class="page hidden">
+            <div class="form-card">
+                <h2 class="card-title text-center">Регистрация</h2>
+                <div id="register-message" class="alert hidden"></div>
+                
+                <div class="form-group">
+                    <label class="form-label">Имя пользователя</label>
+                    <input type="text" id="register-username" class="form-control" placeholder="Минимум 3 символа">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" id="register-password" class="form-control" placeholder="Минимум 4 символа">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Повторите пароль</label>
+                    <input type="password" id="register-confirm-password" class="form-control" placeholder="Повторите пароль">
+                </div>
+                
+                <button onclick="register()" class="btn btn-success">Зарегистрироваться</button>
+                <button onclick="showPage('home')" class="btn btn-secondary mt-1">На главную</button>
+                
+                <p class="text-center mt-2">
+                    Уже есть аккаунт? <a href="#" onclick="showPage('login')" style="color: #3498db; font-weight: 600;">Войдите</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Создание заявки -->
+        <div id="page-create" class="page hidden">
+            <div class="form-card">
+                <h2 class="card-title text-center">Новая заявка</h2>
+                <div id="create-message" class="alert hidden"></div>
+                
+                <div class="form-group">
+                    <label class="form-label">Имя или организация</label>
+                    <input type="text" id="create-name" class="form-control" placeholder="Кто нуждается в помощи">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Город</label>
+                    <input type="text" id="create-city" class="form-control" placeholder="Где нужна помощь">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Телефон для связи</label>
+                    <input type="text" id="create-phone" class="form-control" placeholder="+7 (XXX) XXX-XX-XX">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Тип помощи</label>
+                    <select id="create-classification" class="form-control">
+                        <option value="">Выберите тип...</option>
+                        <option value="social">Социальная помощь</option>
+                        <option value="ecological">Экологическая помощь</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Описание помощи</label>
+                    <textarea id="create-help" class="form-control" placeholder="Подробно опишите, какая помощь нужна..."></textarea>
+                </div>
+                
+                <button onclick="createRequest()" class="btn btn-success">Создать заявку</button>
+                <button onclick="goToDashboard()" class="btn btn-secondary mt-1">Отмена</button>
+            </div>
+        </div>
+
+        <!-- Просмотр заявок -->
+        <div id="page-view" class="page hidden">
+            <header class="main-header">
+                <h1>👀 Активные заявки</h1>
+                <div id="view-auth-info"></div>
+            </header>
+            
+            <button onclick="goToDashboard()" class="btn btn-secondary">← На главную</button>
+            
+            <div id="view-stats" class="card mt-1">
+                <div class="card-title">Статистика</div>
+                <div id="view-stats-content"></div>
+            </div>
+            
+            <div id="view-requests" class="grid"></div>
+        </div>
+
+        <!-- Детали заявки -->
+        <div id="page-request-detail" class="page hidden">
+            <button onclick="showPage('view')" class="btn btn-secondary">← Назад к списку</button>
+            <div id="request-detail-content" class="card mt-1"></div>
+        </div>
+
+        <!-- Мои заявки -->
+        <div id="page-my-requests" class="page hidden">
+            <header class="main-header">
+                <h1 id="my-requests-title">📋 Мои заявки</h1>
+            </header>
+            
+            <button onclick="goToDashboard()" class="btn btn-secondary">← На главную</button>
+            <div id="my-requests-list" class="grid mt-1"></div>
+        </div>
+
+        <!-- Архив -->
+        <div id="page-archive" class="page hidden">
+            <header class="main-header">
+                <h1>📁 Архив заявок</h1>
+            </header>
+            
+            <button onclick="goToDashboard()" class="btn btn-secondary">← На главную</button>
+            <div id="archive-list" class="grid mt-1"></div>
+        </div>
+
+        <!-- Админ-панель -->
+        <div id="page-admin" class="page hidden">
+            <header class="main-header">
+                <h1>⚙️ Панель администратора</h1>
+                <div id="admin-user-info"></div>
+            </header>
+            
+            <button onclick="goToDashboard()" class="btn btn-secondary">← На главную</button>
+            
+            <div id="admin-stats" class="stats-grid mt-1"></div>
+            
+            <div class="btn-group mt-1">
+                <button onclick="showPage('view')" class="btn">👀 Активные</button>
+                <button onclick="showPage('archive')" class="btn">📁 Архив</button>
+                <button onclick="showPage('my-requests')" class="btn">📋 Все заявки</button>
+            </div>
+            
+            <div id="admin-recent-requests" class="card mt-2">
+                <div class="card-title">Последние заявки</div>
+                <div id="admin-recent-content"></div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Волонтерская доска помощи • 2024 • Все для добрых дел 🤝</p>
+            <p class="mt-1"><small>Данные хранятся в вашем браузере</small></p>
+        </footer>
+    </div>
+
+    <script>
+        // ==================== КОНСТАНТЫ И ПЕРЕМЕННЫЕ ====================
+        const DATA_KEY = 'volunteer_data_v2';
+        const USERS_KEY = 'volunteer_users_v2';
+        const SESSION_KEY = 'volunteer_session_v2';
+        
+        const STATUS = {
+            ACTIVE: "активна",
+            IN_PROGRESS: "в работе",
+            COMPLETED: "завершена",
+            CANCELLED: "отменена"
+        };
+        
+        const CLASSIFICATIONS = {
+            social: 'Социальная помощь',
+            ecological: 'Экологическая помощь',
+            other: 'Другая помощь'
+        };
+        
+        const ADMINS = ['admin'];
+        
+        let currentUser = null;
+        let currentRequestId = null;
+        
+        // ==================== СИСТЕМА ХРАНЕНИЯ ====================
+        
+        function loadData() {
+            try {
+                const data = localStorage.getItem(DATA_KEY);
+                return data ? JSON.parse(data) : [];
+            } catch (e) {
+                console.error('Ошибка загрузки данных:', e);
+                return [];
+            }
+        }
+        
+        function saveData(data) {
+            try {
+                localStorage.setItem(DATA_KEY, JSON.stringify(data));
+                return true;
+            } catch (e) {
+                console.error('Ошибка сохранения данных:', e);
+                return false;
+            }
+        }
+        
+        function loadUsers() {
+            try {
+                const users = localStorage.getItem(USERS_KEY);
+                if (!users) {
+                    const defaultUsers = {
+                        'admin': hashPassword('admin123'),
+                        'demo': hashPassword('demo123')
+                    };
+                    saveUsers(defaultUsers);
+                    return defaultUsers;
+                }
+                return JSON.parse(users);
+            } catch (e) {
+                console.error('Ошибка загрузки пользователей:', e);
+                return {};
+            }
+        }
+        
+        function saveUsers(users) {
+            try {
+                localStorage.setItem(USERS_KEY, JSON.stringify(users));
+                return true;
+            } catch (e) {
+                console.error('Ошибка сохранения пользователей:', e);
+                return false;
+            }
+        }
+        
+        function hashPassword(password) {
+            let hash = 0;
+            for (let i = 0; i < password.length; i++) {
+                const char = password.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return hash.toString();
+        }
+        
+        // ==================== АВТОРИЗАЦИЯ ====================
+        
+        function checkAuth() {
+            try {
+                const session = localStorage.getItem(SESSION_KEY);
+                if (session) {
+                    const { username, passwordHash } = JSON.parse(session);
+                    const users = loadUsers();
+                    if (users[username] === passwordHash) {
+                        currentUser = username;
+                        return username;
+                    }
+                }
+            } catch (e) {
+                console.error('Ошибка проверки авторизации:', e);
+            }
+            return null;
+        }
+        
+        function isAdmin(username) {
+            return ADMINS.includes(username);
+        }
+        
+        function saveSession(username, passwordHash) {
+            try {
+                const session = { username, passwordHash };
+                localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+                return true;
+            } catch (e) {
+                console.error('Ошибка сохранения сессии:', e);
+                return false;
+            }
+        }
+        
+        function clearSession() {
+            try {
+                localStorage.removeItem(SESSION_KEY);
+                currentUser = null;
+                return true;
+            } catch (e) {
+                console.error('Ошибка выхода:', e);
+                return false;
+            }
+        }
+        
+        // ==================== УТИЛИТЫ ====================
+        
+        function formatDate(date = new Date()) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${day}.${month}.${year} ${hours}:${minutes}`;
+        }
+        
+        function getClassificationName(code) {
+            return CLASSIFICATIONS[code] || 'Не указано';
+        }
+        
+        function showAlert(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            element.textContent = message;
+            element.className = `alert alert-${type} visible`;
+            element.style.display = 'block';
+            
+            setTimeout(() => {
+                element.style.display = 'none';
+                element.className = `alert hidden`;
+            }, 5000);
+        }
+        
+        // ==================== НАВИГАЦИЯ ====================
+        
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('visible');
+                page.classList.add('hidden');
+            });
+            
+            const page = document.getElementById(`page-${pageId}`);
+            if (page) {
+                page.classList.remove('hidden');
+                page.classList.add('visible');
+                
+                switch(pageId) {
+                    case 'home': loadHomePage(); break;
+                    case 'dashboard': loadDashboard(); break;
+                    case 'view': loadViewPage(); break;
+                    case 'my-requests': loadMyRequestsPage(); break;
+                    case 'archive': loadArchivePage(); break;
+                    case 'admin': loadAdminPage(); break;
+                }
+                
+                window.scrollTo(0, 0);
+            }
+        }
+        
+        function goToDashboard() {
+            if (currentUser) {
+                showPage('dashboard');
+            } else {
+                showPage('home');
+            }
+        }
+        
+        // ==================== СТРАНИЦЫ ====================
+        
+        function loadHomePage() {
+            const allRequests = loadData();
+            const activeRequests = allRequests.filter(r => r.status === STATUS.ACTIVE);
+            const users = loadUsers();
+            
+            document.getElementById('home-stats').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${allRequests.length}</div>
+                    <div class="stat-label">Всего заявок</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${activeRequests.length}</div>
+                    <div class="stat-label">Активных</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${Object.keys(users).length}</div>
+                    <div class="stat-label">Пользователей</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${allRequests.filter(r => r.status === STATUS.COMPLETED).length}</div>
+                    <div class="stat-label">Выполнено</div>
+                </div>
+            `;
+        }
+        
+        function loadDashboard() {
+            if (!currentUser) {
+                showPage('home');
+                return;
+            }
+            
+            const allRequests = loadData();
+            const activeRequests = allRequests.filter(r => r.status === STATUS.ACTIVE);
+            const myRequests = allRequests.filter(r => r.author === currentUser);
+            const respondedRequests = allRequests.filter(r => r.responders && r.responders.includes(currentUser));
+            
+            document.getElementById('dashboard-user-info').innerHTML = `
+                <p>Вы вошли как: <strong>${currentUser}</strong></p>
+                ${isAdmin(currentUser) ? '<p><span class="status-badge status-active">Администратор</span></p>' : ''}
+            `;
+            
+            document.getElementById('admin-btn').classList.toggle('hidden', !isAdmin(currentUser));
+            
+            document.getElementById('dashboard-stats').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${activeRequests.length}</div>
+                    <div class="stat-label">Активных</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${myRequests.length}</div>
+                    <div class="stat-label">Мои заявки</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${respondedRequests.length}</div>
+                    <div class="stat-label">Мои отклики</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${allRequests.filter(r => r.status === STATUS.COMPLETED).length}</div>
+                    <div class="stat-label">Выполнено</div>
+                </div>
+            `;
+            
+            const recentActive = activeRequests.slice(0, 3);
+            const recentMy = myRequests.slice(0, 3);
+            
+            let activeHtml = recentActive.map(request => `
+                <div class="card">
+                    <div class="card-title">${request.name}</div>
+                    <div class="card-info"><strong>Город:</strong> ${request.city}</div>
+                    <div class="card-info"><strong>Тип:</strong> ${getClassificationName(request.classification)}</div>
+                    <span class="status-badge status-active">${request.status}</span>
+                    <button onclick="viewRequestDetail(${request.id})" class="btn mt-1">Подробнее</button>
+                </div>
+            `).join('');
+            
+            let myHtml = recentMy.map(request => `
+                <div class="card">
+                    <div class="card-title">${request.name}</div>
+                    <div class="card-info"><strong>Статус:</strong> ${request.status}</div>
+                    <div class="card-info"><strong>Откликов:</strong> ${request.responders ? request.responders.length : 0}</div>
+                    <button onclick="viewRequestDetail(${request.id})" class="btn mt-1">Управление</button>
+                </div>
+            `).join('');
+            
+            document.getElementById('dashboard-content').innerHTML = `
+                <div class="card">
+                    <div class="card-title">🎯 Активные заявки</div>
+                    ${activeHtml || '<p class="text-center">Нет активных заявок</p>'}
+                </div>
+                <div class="card">
+                    <div class="card-title">📋 Мои заявки</div>
+                    ${myHtml || '<p class="text-center">У вас пока нет заявок</p>'}
+                </div>
+            `;
+        }
+        
+        // ==================== АВТОРИЗАЦИЯ (обработчики) ====================
+        
+        function login() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            
+            if (!username || !password) {
+                showAlert('login-message', 'Заполните все поля', 'error');
+                return;
+            }
+            
+            const users = loadUsers();
+            const passwordHash = hashPassword(password);
+            
+            if (users[username] === passwordHash) {
+                saveSession(username, passwordHash);
+                currentUser = username;
+                showPage('dashboard');
+            } else {
+                showAlert('login-message', 'Неверный логин или пароль', 'error');
+            }
+        }
+        
+        function register() {
+            const username = document.getElementById('register-username').value.trim();
+            const password = document.getElementById('register-password').value.trim();
+            const confirmPassword = document.getElementById('register-confirm-password').value.trim();
+            
+            const users = loadUsers();
+            
+            if (!username || !password) {
+                showAlert('register-message', 'Заполните все поля', 'error');
+                return;
+            }
+            
+            if (username.length < 3) {
+                showAlert('register-message', 'Логин должен быть не менее 3 символов', 'error');
+                return;
+            }
+            
+            if (password.length < 4) {
+                showAlert('register-message', 'Пароль должен быть не менее 4 символов', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAlert('register-message', 'Пароли не совпадают', 'error');
+                return;
+            }
+            
+            if (users[username]) {
+                showAlert('register-message', 'Пользователь с таким именем уже существует', 'error');
+                return;
+            }
+            
+            users[username] = hashPassword(password);
+            saveUsers(users);
+            
+            saveSession(username, users[username]);
+            currentUser = username;
+            showAlert('register-message', 'Регистрация успешна!', 'success');
+            setTimeout(() => showPage('dashboard'), 1000);
+        }
+        
+        function logout() {
+            clearSession();
+            showPage('home');
+        }
+        
+        // ==================== ЗАЯВКИ ====================
+        
+        function createRequest() {
+            if (!currentUser) {
+                showPage('login');
+                return;
+            }
+            
+            const name = document.getElementById('create-name').value.trim();
+            const city = document.getElementById('create-city').value.trim();
+            const phone = document.getElementById('create-phone').value.trim();
+            const help = document.getElementById('create-help').value.trim();
+            const classification = document.getElementById('create-classification').value;
+            
+            if (!name || !city || !phone || !help || !classification) {
+                showAlert('create-message', 'Заполните все обязательные поля', 'error');
+                return;
+            }
+            
+            const allRequests = loadData();
+            const newId = allRequests.length > 0 ? Math.max(...allRequests.map(r => r.id)) + 1 : 1;
+            
+            const newRequest = {
+                id: newId,
+                author: currentUser,
+                name,
+                city,
+                phone,
+                help,
+                classification,
+                status: STATUS.ACTIVE,
+                created_at: formatDate(),
+                updated_at: formatDate(),
+                responders: []
+            };
+            
+            allRequests.push(newRequest);
+            saveData(allRequests);
+            
+            showAlert('create-message', 'Заявка успешно создана!', 'success');
+            
+            document.getElementById('create-form')?.reset();
+            document.getElementById('create-name').value = '';
+            document.getElementById('create-city').value = '';
+            document.getElementById('create-phone').value = '';
+            document.getElementById('create-help').value = '';
+            document.getElementById('create-classification').value = '';
+            
+            setTimeout(() => {
+                showPage('my-requests');
+            }, 1500);
+        }
+        
+        function loadViewPage() {
+            const allRequests = loadData();
+            const activeRequests = allRequests.filter(r => r.status === STATUS.ACTIVE);
+            
+            let authInfo = 'Вы не авторизованы';
+            if (currentUser) {
+                authInfo = `Вы вошли как: <strong>${currentUser}</strong>`;
+                if (isAdmin(currentUser)) {
+                    authInfo += ' <span class="status-badge status-active">Админ</span>';
+                }
+            }
+            document.getElementById('view-auth-info').innerHTML = authInfo;
+            
+            document.getElementById('view-stats-content').innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">${activeRequests.length}</div>
+                        <div class="stat-label">Активных</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${allRequests.length}</div>
+                        <div class="stat-label">Всего</div>
+                    </div>
+                </div>
+            `;
+            
+            let requestsHtml = '';
+            activeRequests.forEach(request => {
+                const classification = getClassificationName(request.classification);
+                
+                let respondButton = '';
+                if (currentUser && currentUser !== request.author && request.status === STATUS.ACTIVE) {
+                    respondButton = `<button onclick="respondToRequest(${request.id})" class="btn btn-warning mt-1">Откликнуться</button>`;
+                }
+                
+                requestsHtml += `
+                    <div class="card">
+                        <div class="card-title">${request.name}</div>
+                        <div class="card-info"><strong>Город:</strong> ${request.city}</div>
+                        <div class="card-info"><strong>Телефон:</strong> ${request.phone}</div>
+                        <div class="card-info"><strong>Тип помощи:</strong> ${classification}</div>
+                        <div class="card-info"><strong>Описание:</strong> ${request.help}</div>
+                        <div class="card-info"><strong>Автор:</strong> ${request.author || 'Аноним'}</div>
+                        <div class="card-info"><strong>Создано:</strong> ${request.created_at}</div>
+                        
+                        <span class="status-badge status-active">${request.status}</span>
+                        
+                        ${request.responders && request.responders.length > 0 ? 
+                            `<div class="card-info"><strong>Откликов:</strong> ${request.responders.length}</div>` : ''}
+                        
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button onclick="viewRequestDetail(${request.id})" class="btn">Подробнее</button>
+                            ${respondButton}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            if (requestsHtml) {
+                document.getElementById('view-requests').innerHTML = requestsHtml;
+            } else {
+                document.getElementById('view-requests').innerHTML = `
+                    <div class="card text-center">
+                        <div class="card-title">Нет активных заявок</div>
+                        <p>Все заявки выполнены или находятся в архиве</p>
+                        <button onclick="showPage('create')" class="btn btn-success mt-1">Создать первую заявку</button>
+                    </div>
+                `;
+            }
+        }
+        
+        function viewRequestDetail(requestId) {
+            currentRequestId = requestId;
+            const allRequests = loadData();
+            const request = allRequests.find(r => r.id === requestId);
+            
+            if (!request) {
+                alert('Заявка не найдена');
+                return;
+            }
+            
+            const classification = getClassificationName(request.classification);
+            let statusClass = 'status-active';
+            if (request.status === STATUS.IN_PROGRESS) statusClass = 'status-progress';
+            else if (request.status === STATUS.COMPLETED) statusClass = 'status-completed';
+            else if (request.status === STATUS.CANCELLED) statusClass = 'status-cancelled';
+            
+            let buttons = '';
+            
+            if (currentUser && currentUser !== request.author && request.status === STATUS.ACTIVE) {
+                buttons += `<button onclick="respondToRequest(${request.id})" class="btn btn-warning">Откликнуться</button>`;
+            }
+            
+            if (currentUser === request.author && request.status !== STATUS.COMPLETED && request.status !== STATUS.CANCELLED) {
+                buttons += `
+                    <button onclick="updateRequestStatus(${request.id}, '${STATUS.COMPLETED}')" class="btn btn-success">Отметить выполненной</button>
+                    <button onclick="updateRequestStatus(${request.id}, '${STATUS.CANCELLED}')" class="btn btn-danger">Отменить</button>
+                `;
+            }
+            
+            if (isAdmin(currentUser) || currentUser === request.author) {
+                buttons += `<button onclick="deleteRequest(${request.id})" class="btn btn-danger">Удалить</button>`;
+            }
+            
+            let respondersHtml = '';
+            if (request.responders && request.responders.length > 0) {
+                respondersHtml = `
+                    <div class="card mt-1">
+                        <div class="card-title">Откликнувшиеся волонтеры (${request.responders.length})</div>
+                        ${request.responders.map(responder => `
+                            <div class="card-info">👤 ${responder}</div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
+            document.getElementById('request-detail-content').innerHTML = `
+                <div class="card-title">${request.name}</div>
+                <div class="card-info"><strong>ID:</strong> ${request.id}</div>
+                <div class="card-info"><strong>Автор:</strong> ${request.author || 'Аноним'}</div>
+                <div class="card-info"><strong>Создано:</strong> ${request.created_at}</div>
+                <div class="card-info"><strong>Обновлено:</strong> ${request.updated_at}</div>
+                
+                <span class="status-badge ${statusClass}">${request.status}</span>
+                
+                <div class="card mt-1">
+                    <div class="card-title">Детали заявки</div>
+                    <div class="card-info"><strong>Тип помощи:</strong> ${classification}</div>
+                    <div class="card-info"><strong>Город:</strong> ${request.city}</div>
+                    <div class="card-info"><strong>Контактный телефон:</strong> ${request.phone}</div>
+                    <div class="card-info"><strong>Описание помощи:</strong></div>
+                    <div style="padding: 15px; background: #f8f9fa; border-radius: 8px; margin-top: 10px;">
+                        ${request.help}
+                    </div>
+                </div>
+                
+                ${respondersHtml}
+                
+                <div class="btn-group mt-2">
+                    ${buttons}
+                </div>
+            `;
+            
+            showPage('request-detail');
+        }
+        
+        function respondToRequest(requestId) {
+            if (!currentUser) {
+                showPage('login');
+                return;
+            }
+            
+            const allRequests = loadData();
+            const requestIndex = allRequests.findIndex(r => r.id === requestId);
+            
+            if (requestIndex === -1) {
+                alert('Заявка не найдена');
+                return;
+            }
+            
+            const request = allRequests[requestIndex];
+            
+            if (currentUser === request.author) {
+                alert('Вы не можете откликнуться на свою заявку');
+                return;
+            }
+            
+            if (request.status !== STATUS.ACTIVE) {
+                alert('На эту заявку нельзя откликнуться');
+                return;
+            }
+            
+            if (!request.responders) {
+                request.responders = [];
+            }
+            
+            if (!request.responders.includes(currentUser)) {
+                request.responders.push(currentUser);
+                
+                if (request.responders.length === 1) {
+                    request.status = STATUS.IN_PROGRESS;
+                }
+                
+                request.updated_at = formatDate();
+                allRequests[requestIndex] = request;
+                saveData(allRequests);
+                
+                alert('Вы успешно откликнулись на заявку!');
+            } else {
+                alert('Вы уже откликнулись на эту заявку');
+            }
+            
+            viewRequestDetail(requestId);
+        }
+        
+        function updateRequestStatus(requestId, newStatus) {
+            if (!confirm('Вы уверены, что хотите изменить статус заявки?')) {
+                return;
+            }
+            
+            const allRequests = loadData();
+            const requestIndex = allRequests.findIndex(r => r.id === requestId);
+            
+            if (requestIndex === -1) {
+                alert('Заявка не найдена');
+                return;
+            }
+            
+            const request = allRequests[requestIndex];
+            
+            if (currentUser !== request.author && !isAdmin(currentUser)) {
+                alert('Доступ запрещен');
+                return;
+            }
+            
+            request.status = newStatus;
+            request.updated_at = formatDate();
+            allRequests[requestIndex] = request;
+            saveData(allRequests);
+            
+            viewRequestDetail(requestId);
+        }
+        
+        function deleteRequest(requestId) {
+            if (!confirm('Вы уверены, что хотите удалить заявку? Это действие нельзя отменить.')) {
+                return;
+            }
+            
+            const allRequests = loadData();
+            const requestIndex = allRequests.findIndex(r => r.id === requestId);
+            
+            if (requestIndex === -1) {
+                alert('Заявка не найдена');
+                return;
+            }
+            
+            const request = allRequests[requestIndex];
+            
+            if (currentUser !== request.author && !isAdmin(currentUser)) {
+                alert('Доступ запрещен');
+                return;
+            }
+            
+            allRequests.splice(requestIndex, 1);
+            saveData(allRequests);
+            
+            alert('Заявка удалена');
+            showPage('my-requests');
+        }
+        
+        function loadMyRequestsPage() {
+            if (!currentUser) {
+                showPage('login');
+                return;
+            }
+            
+            const allRequests = loadData();
+            const isAdminUser = isAdmin(currentUser);
+            
+            document.getElementById('my-requests-title').textContent = isAdminUser ? 'Все заявки' : 'Мои заявки';
+            
+            let userRequests;
+            if (isAdminUser) {
+                userRequests = allRequests;
+            } else {
+                userRequests = allRequests.filter(r => 
+                    r.author === currentUser || 
+                    (r.responders && r.responders.includes(currentUser))
+                );
+            }
+            
+            userRequests.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            
+            let requestsHtml = '';
+            userRequests.forEach(request => {
+                const classification = getClassificationName(request.classification);
+                const isAuthor = request.author === currentUser;
+                
+                let statusClass = 'status-active';
+                if (request.status === STATUS.IN_PROGRESS) statusClass = 'status-progress';
+                else if (request.status === STATUS.COMPLETED) statusClass = 'status-completed';
+                else if (request.status === STATUS.CANCELLED) statusClass = 'status-cancelled';
+                
+                let roleBadge = isAuthor ? 
+                    '<span class="status-badge status-active" style="background: #27ae60">Автор</span>' :
+                    '<span class="status-badge status-progress" style="background: #f39c12">Откликнулся</span>';
+                
+                requestsHtml += `
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div class="card-title" style="margin: 0;">${request.name}</div>
+                            <span class="status-badge ${statusClass}">${request.status}</span>
+                        </div>
+                        
+                        <div class="card-info"><strong>Тип:</strong> ${classification}</div>
+                        <div class="card-info"><strong>Город:</strong> ${request.city}</div>
+                        <div class="card-info"><strong>Создано:</strong> ${request.created_at}</div>
+                        
+                        <div style="margin: 10px 0;">
+                            ${roleBadge}
+                            ${request.responders && request.responders.length > 0 ? 
+                                `<span style="margin-left: 10px; color: #666;">Откликов: ${request.responders.length}</span>` : ''}
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button onclick="viewRequestDetail(${request.id})" class="btn">Подробнее</button>
+                            ${!isAuthor && request.status === STATUS.ACTIVE ? 
+                                `<button onclick="respondToRequest(${request.id})" class="btn btn-warning">Откликнуться</button>` : ''}
+                            ${(isAuthor || isAdminUser) ? 
+                                `<button onclick="viewRequestDetail(${request.id})" class="btn btn-success">Управление</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            if (requestsHtml) {
+                document.getElementById('my-requests-list').innerHTML = requestsHtml;
+            } else {
+                document.getElementById('my-requests-list').innerHTML = `
+                    <div class="card text-center">
+                        <div class="card-title">У вас пока нет заявок</div>
+                        <p>Создайте первую заявку или откликнитесь на существующие</p>
+                        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+                            <button onclick="showPage('create')" class="btn btn-success">Создать заявку</button>
+                            <button onclick="showPage('view')" class="btn">Найти заявки</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        function loadArchivePage() {
+            if (!currentUser) {
+                showPage('login');
+                return;
+            }
+            
+            const allRequests = loadData();
+            const isAdminUser = isAdmin(currentUser);
+            
+            let archivedRequests;
+            if (isAdminUser) {
+                archivedRequests = allRequests.filter(r => r.status === STATUS.COMPLETED || r.status === STATUS.CANCELLED);
+            } else {
+                archivedRequests = allRequests.filter(r => 
+                    r.author === currentUser && 
+                    (r.status === STATUS.COMPLETED || r.status === STATUS.CANCELLED)
+                );
+            }
+            
+            let requestsHtml = '';
+            archivedRequests.forEach(request => {
+                const classification = getClassificationName(request.classification);
+                let statusClass = request.status === STATUS.COMPLETED ? 'status-completed' : 'status-cancelled';
+                
+                requestsHtml += `
+                    <div class="card" style="opacity: 0.8;">
+                        <div class="card-title">${request.name}</div>
+                        <div class="card-info"><strong>Тип:</strong> ${classification}</div>
+                        <div class="card-info"><strong>Город:</strong> ${request.city}</div>
+                        <div class="card-info"><strong>Создано:</strong> ${request.created_at}</div>
+                        <div class="card-info"><strong>Завершено:</strong> ${request.updated_at}</div>
+                        <div class="card-info"><strong>Автор:</strong> ${request.author || 'Аноним'}</div>
+                        
+                        <span class="status-badge ${statusClass}">${request.status}</span>
+                        
+                        <button onclick="viewRequestDetail(${request.id})" class="btn mt-1">Просмотреть</button>
+                    </div>
+                `;
+            });
+            
+            if (requestsHtml) {
+                document.getElementById('archive-list').innerHTML = requestsHtml;
+            } else {
+                document.getElementById('archive-list').innerHTML = `
+                    <div class="card text-center">
+                        <div class="card-title">Архив пуст</div>
+                        <p>Здесь будут отображаться завершенные и отмененные заявки</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function loadAdminPage() {
+            if (!currentUser || !isAdmin(currentUser)) {
+                showPage('dashboard');
+                return;
+            }
+            
+            const allRequests = loadData();
+            const users = loadUsers();
+            
+            document.getElementById('admin-user-info').innerHTML = `
+                <p>Администратор: <strong>${currentUser}</strong></p>
+            `;
+            
+            const stats = {
+                total: allRequests.length,
+                active: allRequests.filter(r => r.status === STATUS.ACTIVE).length,
+                in_progress: allRequests.filter(r => r.status === STATUS.IN_PROGRESS).length,
+                completed: allRequests.filter(r => r.status === STATUS.COMPLETED).length,
+                cancelled: allRequests.filter(r => r.status === STATUS.CANCELLED).length,
+                social: allRequests.filter(r => r.classification === 'social').length,
+                ecological: allRequests.filter(r => r.classification === 'ecological').length,
+                other: allRequests.filter(r => r.classification === 'other').length,
+                users: Object.keys(users).length
+            };
+            
+            document.getElementById('admin-stats').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${stats.total}</div>
+                    <div class="stat-label">Всего</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.active}</div>
+                    <div class="stat-label">Активных</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.social}</div>
+                    <div class="stat-label">Социальных</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.ecological}</div>
+                    <div class="stat-label">Экологических</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.other}</div>
+                    <div class="stat-label">Других</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.in_progress}</div>
+                    <div class="stat-label">В работе</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.completed}</div>
+                    <div class="stat-label">Завершено</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.cancelled}</div>
+                    <div class="stat-label">Отменено</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.users}</div>
+                    <div class="stat-label">Пользователей</div>
+                </div>
+            `;
+            
+            const recentRequests = allRequests.slice(-10);
+            let recentHtml = '';
+            recentRequests.forEach(request => {
+                const classification = getClassificationName(request.classification);
+                let statusClass = 'status-active';
+                if (request.status === STATUS.IN_PROGRESS) statusClass = 'status-progress';
+                else if (request.status === STATUS.COMPLETED) statusClass = 'status-completed';
+                else if (request.status === STATUS.CANCELLED) statusClass = 'status-cancelled';
+                
+                recentHtml += `
+                    <div style="padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${request.name}</strong><br>
+                            <small>${request.author} • ${classification} • ${request.created_at}</small>
+                        </div>
+                        <div>
+                            <span class="status-badge ${statusClass}" style="font-size: 0.8rem;">${request.status}</span>
+                            <button onclick="viewRequestDetail(${request.id})" class="btn" style="padding: 5px 10px; font-size: 0.9rem; margin-left: 10px;">Просмотр</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('admin-recent-content').innerHTML = recentHtml || '<p class="text-center">Нет заявок</p>';
+        }
+        
+        // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem(USERS_KEY)) {
+                const defaultUsers = {
+                    'admin': hashPassword('admin123'),
+                    'demo': hashPassword('demo123')
+                };
+                saveUsers(defaultUsers);
+                
+                const demoRequests = [
+                    {
+                        id: 1,
+                        author: 'demo',
+                        name: 'Помощь пожилым',
+                        city: 'Москва',
+                        phone: '+7 (999) 123-45-67',
+                        help: 'Нужна помощь с доставкой продуктов пенсионерам в районе Арбата',
+                        classification: 'social',
+                        status: STATUS.ACTIVE,
+                        created_at: '15.01.2024 10:30',
+                        updated_at: '15.01.2024 10:30',
+                        responders: []
+                    },
+                    {
+                        id: 2,
+                        author: 'demo',
+                        name: 'Уборка парка',
+                        city: 'Санкт-Петербург',
+                        phone: '+7 (911) 987-65-43',
+                        help: 'Организуем субботник в Центральном парке. Нужны волонтеры',
+                        classification: 'ecological',
+                        status: STATUS.IN_PROGRESS,
+                        created_at: '14.01.2024 14:20',
+                        updated_at: '14.01.2024 14:20',
+                        responders: ['volunteer1']
+                    }
+                ];
+                saveData(demoRequests);
+            }
+            
+            const user = checkAuth();
+            if (user) {
+                currentUser = user;
+                showPage('dashboard');
+            } else {
+                showPage('home');
+            }
+            
+            console.log('Волонтерская доска загружена!');
+            console.log('Демо-логин: demo / demo123');
+            console.log('Админ: admin / admin123');
+        });
+    </script>
+</body>
+</html>
