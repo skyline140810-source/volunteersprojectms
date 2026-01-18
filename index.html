@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Волонтерская доска</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
     <style>
         /* РЕСЕТ СТИЛЕЙ */
         * {
@@ -236,10 +235,10 @@
             margin: 2rem 0;
         }
 
-        /* СТАТИСТИКА */
+        /* СТАТИСТИКА - ИЗМЕНЕНО НА 3 КОЛОНКИ */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
             margin: 2rem 0;
         }
@@ -258,14 +257,14 @@
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 800;
             color: #2c3e50;
             line-height: 1;
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #7f8c8d;
             margin-top: 0.5rem;
             text-transform: uppercase;
@@ -336,7 +335,7 @@
             }
             
             .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
@@ -351,6 +350,43 @@
             
             .main-header h1 {
                 font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .stat-card {
+                padding: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .stat-card {
+                padding: 0.8rem;
+            }
+            
+            .stat-number {
+                font-size: 1.3rem;
+            }
+            
+            .stat-label {
+                font-size: 0.7rem;
             }
         }
 
@@ -404,7 +440,7 @@
         <!-- Главная страница -->
         <div id="page-home" class="page visible">
             <header class="main-header">
-                <h1>🤝 Волонтерская доска</h1>
+                <h1>Волонтерская доска</h1>
                 <p>Помогаем находить помощь и помогать</p>
             </header>
             
@@ -425,19 +461,19 @@
         <!-- Дашборд -->
         <div id="page-dashboard" class="page hidden">
             <header class="main-header">
-                <h1>🤝 Волонтерская доска</h1>
+                <h1>Волонтерская доска</h1>
                 <div id="dashboard-user-info"></div>
             </header>
             
             <div id="dashboard-stats" class="stats-grid"></div>
             
             <div class="btn-group">
-                <button onclick="showPage('create')" class="btn btn-success">➕ Создать заявку</button>
-                <button onclick="showPage('view')" class="btn">👀 Все заявки</button>
-                <button onclick="showPage('my-requests')" class="btn">📋 Мои заявки</button>
-                <button onclick="showPage('archive')" class="btn">📁 Архив</button>
-                <button id="admin-btn" onclick="showPage('admin')" class="btn btn-danger hidden">⚙️ Админ-панель</button>
-                <button onclick="logout()" class="btn btn-secondary">🚪 Выйти</button>
+                <button onclick="showPage('create')" class="btn btn-success">Создать заявку</button>
+                <button onclick="showPage('view')" class="btn">Все заявки</button>
+                <button onclick="showPage('my-requests')" class="btn">Мои заявки</button>
+                <button onclick="showPage('archive')" class="btn">Архив</button>
+                <button id="admin-btn" onclick="showPage('admin')" class="btn btn-danger hidden">Админ-панель</button>
+                <button onclick="logout()" class="btn btn-secondary">Выйти</button>
             </div>
             
             <div id="dashboard-content" class="grid mt-2"></div>
@@ -542,11 +578,11 @@
         <!-- Просмотр заявок -->
         <div id="page-view" class="page hidden">
             <header class="main-header">
-                <h1>👀 Активные заявки</h1>
+                <h1>Активные заявки</h1>
                 <div id="view-auth-info"></div>
             </header>
             
-            <button onclick="goToDashboard()" class="btn btn-secondary">← На главную</button>
+            <button onclick="goToDashboard()" class="btn btn-secondary">На главную</button>
             
             <div id="view-stats" class="card mt-1">
                 <div class="card-title">Статистика</div>
@@ -558,45 +594,45 @@
 
         <!-- Детали заявки -->
         <div id="page-request-detail" class="page hidden">
-            <button onclick="showPage('view')" class="btn btn-secondary">← Назад к списку</button>
+            <button onclick="showPage('view')" class="btn btn-secondary">Назад к списку</button>
             <div id="request-detail-content" class="card mt-1"></div>
         </div>
 
         <!-- Мои заявки -->
         <div id="page-my-requests" class="page hidden">
             <header class="main-header">
-                <h1 id="my-requests-title">📋 Мои заявки</h1>
+                <h1 id="my-requests-title">Мои заявки</h1>
             </header>
             
-            <button onclick="goToDashboard()" class="btn btn-secondary">← На главную</button>
+            <button onclick="goToDashboard()" class="btn btn-secondary">На главную</button>
             <div id="my-requests-list" class="grid mt-1"></div>
         </div>
 
         <!-- Архив -->
         <div id="page-archive" class="page hidden">
             <header class="main-header">
-                <h1>📁 Архив заявок</h1>
+                <h1>Архив заявок</h1>
             </header>
             
-            <button onclick="goToDashboard()" class="btn btn-secondary">← На главную</button>
+            <button onclick="goToDashboard()" class="btn btn-secondary">На главную</button>
             <div id="archive-list" class="grid mt-1"></div>
         </div>
 
         <!-- Админ-панель -->
         <div id="page-admin" class="page hidden">
             <header class="main-header">
-                <h1>⚙️ Панель администратора</h1>
+                <h1>Панель администратора</h1>
                 <div id="admin-user-info"></div>
             </header>
             
-            <button onclick="goToDashboard()" class="btn btn-secondary">← На главную</button>
+            <button onclick="goToDashboard()" class="btn btn-secondary">На главную</button>
             
             <div id="admin-stats" class="stats-grid mt-1"></div>
             
             <div class="btn-group mt-1">
-                <button onclick="showPage('view')" class="btn">👀 Активные</button>
-                <button onclick="showPage('archive')" class="btn">📁 Архив</button>
-                <button onclick="showPage('my-requests')" class="btn">📋 Все заявки</button>
+                <button onclick="showPage('view')" class="btn">Активные</button>
+                <button onclick="showPage('archive')" class="btn">Архив</button>
+                <button onclick="showPage('my-requests')" class="btn">Все заявки</button>
             </div>
             
             <div id="admin-recent-requests" class="card mt-2">
@@ -606,7 +642,7 @@
         </div>
 
         <footer class="footer">
-            <p>Волонтерская доска помощи • 2026 • Все для добрых дел 🤝</p>
+            <p>Волонтерская доска помощи • 2026 • Все для добрых дел</p>
             <p class="mt-1"><small>Данные хранятся в вашем браузере</small></p>
         </footer>
     </div>
@@ -810,6 +846,7 @@
             const activeRequests = allRequests.filter(r => r.status === STATUS.ACTIVE);
             const users = loadUsers();
             
+            // Статистика - только 3 карточки
             document.getElementById('home-stats').innerHTML = `
                 <div class="stat-card">
                     <div class="stat-number">${allRequests.length}</div>
@@ -822,10 +859,6 @@
                 <div class="stat-card">
                     <div class="stat-number">${Object.keys(users).length}</div>
                     <div class="stat-label">Пользователей</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${allRequests.filter(r => r.status === STATUS.COMPLETED).length}</div>
-                    <div class="stat-label">Выполнено</div>
                 </div>
             `;
         }
@@ -848,6 +881,7 @@
             
             document.getElementById('admin-btn').classList.toggle('hidden', !isAdmin(currentUser));
             
+            // Статистика - только 3 карточки
             document.getElementById('dashboard-stats').innerHTML = `
                 <div class="stat-card">
                     <div class="stat-number">${activeRequests.length}</div>
@@ -860,10 +894,6 @@
                 <div class="stat-card">
                     <div class="stat-number">${respondedRequests.length}</div>
                     <div class="stat-label">Мои отклики</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${allRequests.filter(r => r.status === STATUS.COMPLETED).length}</div>
-                    <div class="stat-label">Выполнено</div>
                 </div>
             `;
             
@@ -891,11 +921,11 @@
             
             document.getElementById('dashboard-content').innerHTML = `
                 <div class="card">
-                    <div class="card-title">🎯 Активные заявки</div>
+                    <div class="card-title">Активные заявки</div>
                     ${activeHtml || '<p class="text-center">Нет активных заявок</p>'}
                 </div>
                 <div class="card">
-                    <div class="card-title">📋 Мои заявки</div>
+                    <div class="card-title">Мои заявки</div>
                     ${myHtml || '<p class="text-center">У вас пока нет заявок</p>'}
                 </div>
             `;
@@ -1011,7 +1041,6 @@
             
             showAlert('create-message', 'Заявка успешно создана!', 'success');
             
-            document.getElementById('create-form')?.reset();
             document.getElementById('create-name').value = '';
             document.getElementById('create-city').value = '';
             document.getElementById('create-phone').value = '';
@@ -1045,6 +1074,10 @@
                     <div class="stat-card">
                         <div class="stat-number">${allRequests.length}</div>
                         <div class="stat-label">Всего</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${Object.keys(loadUsers()).length}</div>
+                        <div class="stat-label">Пользователей</div>
                     </div>
                 </div>
             `;
@@ -1133,7 +1166,7 @@
                     <div class="card mt-1">
                         <div class="card-title">Откликнувшиеся волонтеры (${request.responders.length})</div>
                         ${request.responders.map(responder => `
-                            <div class="card-info">👤 ${responder}</div>
+                            <div class="card-info">${responder}</div>
                         `).join('')}
                     </div>
                 `;
